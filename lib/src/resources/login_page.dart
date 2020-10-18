@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:taxi_app/src/resources/register_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -53,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                 child: Stack (
                   alignment: AlignmentDirectional.centerEnd,
                   children: <Widget>[
@@ -64,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                         labelText: "Password",
                         prefixIcon: Container (
                           width: 50,
-                          child: Image.asset("ic_phone.png"),
+                          child: Image.asset("ic_lock.png"),
                         ),
                         border: OutlineInputBorder (
                             borderSide: BorderSide (color: Colors.black, width: 1),
@@ -106,9 +108,9 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {},
                     child: Text (
                       "LOG IN",
-                      style: TextStyle (fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+                      style: TextStyle (fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
                     ),
-                    color: Colors.lightGreenAccent,
+                    color: Colors.lightBlueAccent,
                     shape: RoundedRectangleBorder (
                       borderRadius: BorderRadius.all(Radius.circular(6))
                     ),
@@ -123,6 +125,12 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle (fontSize: 16, color: Colors.grey),
                     children: <TextSpan> [
                       TextSpan (
+                        recognizer: TapGestureRecognizer ()
+                          ..onTap = () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute (
+                                builder: (context) => RegisterPage ()));},
                         text: "Sign up for a new account",
                         style: TextStyle (fontSize: 16, color: Colors.blue)
                       )
