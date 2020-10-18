@@ -7,6 +7,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  bool _showPass = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold (
@@ -20,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox (
                 height: 140
               ),
-              Image.asset('ic_car_green'),
+              Image.asset('ic_car_green.png'),
               Padding (
                 padding: const EdgeInsets.fromLTRB(0,40, 0, 6),
                 child: Text (
@@ -33,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle (fontSize: 18, color: Colors.black),
               ),
               Padding (
-                padding: const EdgeInsets.fromLTRB(0, 145, 0, 20),
+                padding: const EdgeInsets.fromLTRB(0, 100, 0, 20),
                 child: TextField (
                   style: TextStyle (fontSize: 18, color: Colors.black),
                   decoration: InputDecoration (
@@ -49,23 +52,42 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              TextField (
-                style: TextStyle (fontSize: 18, color: Colors.black),
-                obscureText: true,
-                decoration: InputDecoration (
-                  labelText: "Password",
-                  prefixIcon: Container (
-                    width: 50,
-                    child: Image.asset("ic_phone.png"),
-                  ),
-                  border: OutlineInputBorder (
-                    borderSide: BorderSide (color: Colors.black, width: 1),
-                    borderRadius: BorderRadius.all(Radius.circular(6))
-                  ),
-                ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+                child: Stack (
+                  alignment: AlignmentDirectional.centerEnd,
+                  children: <Widget>[
+                    TextField (
+                      style: TextStyle (fontSize: 18, color: Colors.black),
+                      obscureText: !_showPass,
+                      decoration: InputDecoration (
+                        labelText: "Password",
+                        prefixIcon: Container (
+                          width: 50,
+                          child: Image.asset("ic_phone.png"),
+                        ),
+                        border: OutlineInputBorder (
+                            borderSide: BorderSide (color: Colors.black, width: 1),
+                            borderRadius: BorderRadius.all(Radius.circular(6))
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: GestureDetector (
+                        onTap: showPass,
+                        child: Text (
+                          _showPass ? "HIDE" : "SHOW",
+                          style: TextStyle (fontSize: 14, color: Colors.black),
+                        ),
+                      ),
+                    )
+                  ],
+                )
+
               ),
               Container (
-                constraints: BoxConstraints.loose(Size(double.infinity, 30)),
+                constraints: BoxConstraints.loose(Size(double.infinity, 40)),
                 alignment: AlignmentDirectional.centerEnd,
                 child: Padding (
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
@@ -84,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {},
                     child: Text (
                       "LOG IN",
-                      style: TextStyle (fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle (fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
                     ),
                     color: Colors.lightGreenAccent,
                     shape: RoundedRectangleBorder (
@@ -97,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
                 child: RichText (
                   text: TextSpan (
-                    text: "New User?",
+                    text: "New User?  ",
                     style: TextStyle (fontSize: 16, color: Colors.grey),
                     children: <TextSpan> [
                       TextSpan (
@@ -114,4 +136,11 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+ void showPass () {
+  setState(() {
+    _showPass = ! _showPass;
+  });
+  }
+
 }
