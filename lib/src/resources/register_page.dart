@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:taxi_app/src/blocs/auth_bloc.dart';
+import 'package:taxi_app/src/resources/Dialog/loading_dialog.dart';
+import 'package:taxi_app/src/resources/Dialog/msg_dialog.dart';
 import 'package:taxi_app/src/resources/home_page.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -209,9 +211,17 @@ class _RegisterPageState extends State<RegisterPage> {
     var isValid = authBloc.isValid(_nameController.text, _emailController.text,
         _passController.text, _phoneController.text);
     if (isValid) {
-      authBloc.signUp(_emailController.text, _passController.text, _nameController.text, _phoneController.text, (){
+      //loading dialog
+      LoadingDialog.showLoadingDialog(context, 'Loading...');
+        authBloc.signUp(_emailController.text.trim(), _passController.text, _nameController.text, _phoneController.text, ()
+        {
+          LoadingDialog.hideLoadingDialog(context);
         Navigator.push(context, MaterialPageRoute (builder: (context) => Homepage()));
-      });
+      }, (msg) {
+          //Show mss dialog
+          LoadingDialog.hideLoadingDialog(context);
+          MsgDialog.showMsgDialog (context,'Sign - in', msg);
+        });
     }
   }
 

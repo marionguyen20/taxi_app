@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle (fontSize: 18, color: Colors.black),
               ),
               Padding (
-                padding: const EdgeInsets.fromLTRB(0, 100, 0, 20),
+                padding: const EdgeInsets.fromLTRB(0, 80, 0, 20),
                 child: TextField (
                   style: TextStyle (fontSize: 18, color: Colors.black),
                   decoration: InputDecoration (
