@@ -23,6 +23,17 @@ class FirAuth {
       }
   }
 
+  void signIn (String email, String pass, Function onSuccess, Function(String) onSignInError) async {
+
+    try {
+      UserCredential user = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: pass);
+    print('Login $user.uid');
+      onSuccess ();
+    } on FirebaseAuthException catch (error) {
+      onSignInError ("Sign in failed! Please try again");
+    }
+  }
+
   void _onSignUpErr (String code, Function(String) onRegisterError ) {
     switch (code) {
 

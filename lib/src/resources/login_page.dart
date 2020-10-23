@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:taxi_app/src/app.dart';
+import 'package:taxi_app/src/resources/Dialog/loading_dialog.dart';
+import 'package:taxi_app/src/resources/Dialog/msg_dialog.dart';
+import 'package:taxi_app/src/resources/home_page.dart';
 import 'package:taxi_app/src/resources/register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,6 +15,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
 
   bool _showPass = false;
+  final TextEditingController _emailController = new TextEditingController();
+  final TextEditingController _passController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.fromLTRB(0, 80, 0, 20),
                 child: TextField (
                   style: TextStyle (fontSize: 18, color: Colors.black),
+                  controller: _emailController,
                   decoration: InputDecoration (
                       labelText: "Email",
                       prefixIcon: Container (
@@ -62,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextField (
                       style: TextStyle (fontSize: 18, color: Colors.black),
                       obscureText: !_showPass,
+                      controller: _passController,
                       decoration: InputDecoration (
                         labelText: "Password",
                         prefixIcon: Container (
@@ -105,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: double.infinity,
                   height: 50,
                   child: RaisedButton (
-                    onPressed: () {},
+                    onPressed: _onLoginClick,
                     child: Text (
                       "LOG IN",
                       style: TextStyle (fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
@@ -150,5 +158,17 @@ class _LoginPageState extends State<LoginPage> {
     _showPass = ! _showPass;
   });
   }
-
+ void _onLoginClick () {
+    String email = _emailController.text.trim();
+    String pass = _passController.text;
+    var authBlock = MyApp.of(context).authBloc;
+    LoadingDialog.showLoadingDialog(context, 'Loading...');
+    authBlock.signIn(email, pass, () {
+      LoadingDialog.hideLoadingDialog(context);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage()));
+    }, (msg) {
+      LoadingDialog.hideLoadingDialog(context);
+      MsgDialog.showMsgDialog(context, "Sign in", msg);
+    });
+ }
 }
